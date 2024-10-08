@@ -1,0 +1,25 @@
+{
+  "name": "quadrigliapp",
+  "version": "1.0.0",
+  "description": "quadriglia mobile",
+  "main": "index.js",
+  "type": "module",
+  
+  "scripts": {
+    "start": "node .",
+    "devStart": "nodemon ."
+  },
+  "author": "AxF",
+  "license": "ISC",
+  "dependencies": {
+    "chess": "^1.2.2",
+    "chessboard": "^2.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "http": "^0.0.1-security",
+    "socket.io": "^4.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}

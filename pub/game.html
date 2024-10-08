@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<h1>Quadrigliapp</h1>
+<!--  Including jQuery, another tool chessboardjs uses:-->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+
+<!--  Including the chessboardjs files:-->
+
+<link rel="stylesheet" href="css/chessboard-1.0.0.css">
+<script src="js/chessboard-1.0.0.min.js"></script>
+
+<div id="wrap">
+
+  <div id="board1" class="small-board" style="width:400px"></div>
+  <div id="board2" class="small-board" style="width:200px"></div>
+
+
+
+</div>
+  
+<style>
+  #wrap{
+    display: flex;
+    flex-direction: row;
+    justify-content: sp;
+  }
+</style>
+
+
+<script>
+
+var board1 = Chessboard('board1', {
+  position: 'start',
+  showNotation: false,
+  draggable: true ,
+  onDrop: onDrop,
+  sparePieces: false
+
+})
+var board2 = Chessboard('board2', {
+  position: 'start',
+  showNotation: false
+
+})
+
+
+
+const socket = io();
+
+socket.on('move', data => {
+  
+  data= data.slice(3)
+  console.log(data)
+  board1.move(data);
+})
+socket.on('illegal', data =>{
+  
+  
+  let from =String(data).slice(3,-3)
+  let to = String(data).slice(6)
+
+  let demove = to + "-" + from ;
+  alert("mossa non valida :" + demove)
+
+  board1.move(demove);
+
+})
+
+function onDrop ( oldLocation,newLocation, piece,  source,
+                     position, orientation) {
+ 
+  
+  move=  JSON.stringify(piece).slice(1,-1) + " " + oldLocation + '-' + newLocation ;
+  
+
+  socket.emit('move',  move);
+}
+
+</script>
+
