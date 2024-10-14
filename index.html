@@ -1,0 +1,46 @@
+<script src="/socket.io/socket.io.js"></script>
+<script type="module" src="">import { Chess } from '/js/chess.js/chess.js'</script>
+
+
+<h1>Quadrigliapp</h1>
+<div id="screen"></div>
+<label for="username">username</label>
+<input type="text" id="username">
+<button id="connect">connect</button>
+<button id="createGame">Play</button>
+
+
+<style>
+#createGame{
+    visibility: collapse;
+}
+
+
+</style>
+
+
+<script>
+usrtag = document.getElementById('username').value
+creteGame =document.getElementById('createGame');
+conne =document.getElementById('connect');
+const socket = io();
+    socket.on('new user' , data =>{
+        console.log(data)
+       
+    })
+
+    conne.addEventListener('click', function(){
+        creteGame.style.visibility = "visible";
+        conne.style.visibility = "collapse";
+        console.log(usrtag)
+        socket.emit('join serv', usrtag )
+    })
+
+
+    creteGame.addEventListener('click', function(){
+        socket.emit('create room')
+        window.location.replace('/game.html')
+    });
+
+ 
+</script>
